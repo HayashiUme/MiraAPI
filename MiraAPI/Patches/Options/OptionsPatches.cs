@@ -15,6 +15,25 @@ namespace MiraAPI.Patches.Options;
 public static class OptionsPatches
 {
     [HarmonyPrefix]
+    [HarmonyPatch(typeof(NumberOption), nameof(NumberOption.Increment), MethodType.Getter)]
+    public static bool FloatIncrementPatch(NumberOption __instance, ref float __result)
+    {
+        if (!__instance.TryGetComponent<MiraNumberOptionComponent>(out var miraNumber) || !miraNumber.ShiftIncrementToggle)
+        {
+            return true;
+        }
+
+        var increment = miraNumber.DefaultIncrement;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            increment /= 2;
+        }
+
+        __result = increment;
+        return false;
+    }
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(RoleOptionSetting), nameof(RoleOptionSetting.IncreaseChance))]
     public static bool RoleIncreaseChancePrefix(RoleOptionSetting __instance)
     {

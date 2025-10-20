@@ -38,6 +38,8 @@ internal static class GameSettingMenuPatches
     private static PassiveButton? _customOneButton;
     private static GameOptionsMenu? _customTwoTab;
     private static PassiveButton? _customTwoButton;
+    private static GameObject? _nextModButton;
+    private static GameObject? _previousModButton;
 
     private static Dictionary<int, Vector3> OptionsPositions { get; } = [];
     private static Dictionary<int, Vector3> ModifiersPositions { get; } = [];
@@ -178,16 +180,16 @@ internal static class GameSettingMenuPatches
 
         _text.alignment = TextAlignmentOptions.Center;
 
-        var nextButton = Object.Instantiate(__instance.BackButton, __instance.BackButton.transform.parent).gameObject;
-        nextButton.transform.localPosition = new Vector3(-2.2663f, 1.5272f, -25f);
-        nextButton.name = "RightArrowButton";
-        nextButton.transform.FindChild("Inactive").gameObject.GetComponent<SpriteRenderer>().sprite =
+        _nextModButton = Object.Instantiate(__instance.BackButton, __instance.BackButton.transform.parent).gameObject;
+        _nextModButton.transform.localPosition = new Vector3(-2.2663f, 1.5272f, -25f);
+        _nextModButton.name = "RightArrowButton";
+        _nextModButton.transform.FindChild("Inactive").gameObject.GetComponent<SpriteRenderer>().sprite =
             MiraAssets.NextButton.LoadAsset();
-        nextButton.transform.FindChild("Active").gameObject.GetComponent<SpriteRenderer>().sprite =
+        _nextModButton.transform.FindChild("Active").gameObject.GetComponent<SpriteRenderer>().sprite =
             MiraAssets.NextButtonActive.LoadAsset();
-        nextButton.gameObject.GetComponent<CloseButtonConsoleBehaviour>().DestroyImmediate();
+        _nextModButton.gameObject.GetComponent<CloseButtonConsoleBehaviour>().DestroyImmediate();
 
-        var passiveButton = nextButton.gameObject.GetComponent<PassiveButton>();
+        var passiveButton = _nextModButton.gameObject.GetComponent<PassiveButton>();
         passiveButton.OnClick = new ButtonClickedEvent();
         passiveButton.OnClick.AddListener(
             (UnityAction)(() =>
@@ -202,13 +204,13 @@ internal static class GameSettingMenuPatches
                 UpdateText(__instance, __instance.GameSettingsTab, __instance.RoleSettingsTab);
             }));
 
-        var backButton = Object.Instantiate(nextButton, __instance.BackButton.transform.parent).gameObject;
-        backButton.transform.localPosition = new Vector3(-4.4209f, 1.5272f, -25f);
-        backButton.name = "LeftArrowButton";
-        backButton.gameObject.GetComponent<CloseButtonConsoleBehaviour>().Destroy();
-        backButton.transform.FindChild("Active").gameObject.GetComponent<SpriteRenderer>().flipX =
-            backButton.transform.FindChild("Inactive").gameObject.GetComponent<SpriteRenderer>().flipX = true;
-        backButton.gameObject.GetComponent<PassiveButton>().OnClick.AddListener(
+        _previousModButton = Object.Instantiate(_nextModButton, __instance.BackButton.transform.parent).gameObject;
+        _previousModButton.transform.localPosition = new Vector3(-4.4209f, 1.5272f, -25f);
+        _previousModButton.name = "LeftArrowButton";
+        _previousModButton.gameObject.GetComponent<CloseButtonConsoleBehaviour>().Destroy();
+        _previousModButton.transform.FindChild("Active").gameObject.GetComponent<SpriteRenderer>().flipX =
+            _previousModButton.transform.FindChild("Inactive").gameObject.GetComponent<SpriteRenderer>().flipX = true;
+        _previousModButton.gameObject.GetComponent<PassiveButton>().OnClick.AddListener(
             (UnityAction)(() =>
             {
                 SaveScrollPositions(__instance);
