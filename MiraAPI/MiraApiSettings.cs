@@ -31,7 +31,7 @@ public class MiraApiSettings(ConfigFile config) : LocalSettingsTab(config)
     /// Gets whether to show keybinds in the control mapper.
     /// </summary>
     [LocalToggleSetting]
-    public ConfigEntry<bool> ShowKeybinds { get; private set; } = config.Bind("Keybinds", "Show Keybinds in Control Mapper", true);
+    public ConfigEntry<bool> ShowKeybinds { get; private set; } = config.Bind("Keybinds", "Show Keybinds on Buttons", true);
     // This would be placed in the keybinds menu, but it crashes for Epic Games users. - Atony
 
     /// <summary>
