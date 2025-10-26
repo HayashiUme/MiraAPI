@@ -27,6 +27,8 @@ public static class HudManagerPatches
 
     private static Dictionary<TextMeshPro, int> vanillaKeybindIcons = new();
 
+    internal static List<TextMeshPro> moddedKeybindIcons = new();
+
     /*
     /// <summary>
     /// Trigger hudstart on current custom gamemode
@@ -88,6 +90,7 @@ public static class HudManagerPatches
             fakeButton.ToggleVisible(true);
             fakeButton.Destroy();
         }
+        moddedKeybindIcons = [];
 
         foreach (var button in CustomButtonManager.CustomButtons)
         {
@@ -182,11 +185,16 @@ public static class HudManagerPatches
     [HarmonyPostfix]
     public static void UpdatePostfix()
     {
+        var canSeeBinds = ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard &&
+                          LocalSettingsTabSingleton<MiraApiSettings>.Instance.ShowKeybinds.Value;
         foreach (var btnIcon in vanillaKeybindIcons)
         {
             btnIcon.Key.text = KeybindUtils.GetKeycodeByActionId(btnIcon.Value).ToString();
-            btnIcon.Key.transform.parent.gameObject.SetActive(ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard &&
-                                                              LocalSettingsTabSingleton<MiraApiSettings>.Instance.ShowKeybinds.Value);
+            btnIcon.Key.transform.parent.gameObject.SetActive(canSeeBinds);
+        }
+        foreach (var btnIcon in moddedKeybindIcons)
+        {
+            btnIcon.transform.parent.gameObject.SetActive(canSeeBinds);
         }
 
         var player = ReInput.players.GetPlayer(0);
