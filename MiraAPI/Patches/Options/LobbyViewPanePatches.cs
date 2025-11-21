@@ -185,7 +185,8 @@ public static class LobbyViewPanePatches
                 __instance.settingsInfo.Add(categoryHeaderRoleVariant.gameObject);
                 num -= 0.696f;
                 var roles = RoleManager.Instance.AllRoles.ToArray().Where(x =>
-                    x is not ICustomRole && x.Role != RoleTypes.Crewmate && x.Role != RoleTypes.Impostor &&
+                    x is not ICustomRole && !x.IsRoleBlacklisted() && x.Role != RoleTypes.Crewmate &&
+                    x.Role != RoleTypes.Impostor &&
                     x.Role != RoleTypes.CrewmateGhost && x.Role != RoleTypes.ImpostorGhost).ToList();
                 for (int j = 0; j < roles.Count; j++)
                 {

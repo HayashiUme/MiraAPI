@@ -74,10 +74,10 @@ public static class RoleSettingMenuPatches
             var num = 0.662f;
 
             var list = CustomRoleManager.AllRoles.Where(
-                r => !r.IsCustomRole() && r.TeamType == RoleTeamTypes.Crewmate && r.Role != RoleTypes.Crewmate &&
+                r => !r.IsCustomRole() && !r.IsRoleBlacklisted() && r.TeamType == RoleTeamTypes.Crewmate && r.Role != RoleTypes.Crewmate &&
                      r.Role != RoleTypes.CrewmateGhost).ToList();
             var list2 = CustomRoleManager.AllRoles.Where(
-                r => !r.IsCustomRole() && r.TeamType == RoleTeamTypes.Impostor && r.Role != RoleTypes.Impostor &&
+                r => !r.IsCustomRole() && !r.IsRoleBlacklisted() && r.TeamType == RoleTeamTypes.Impostor && r.Role != RoleTypes.Impostor &&
                      r.Role != RoleTypes.ImpostorGhost).ToList();
 
             if (__instance.roleTabs == null || __instance.roleTabs.Count == 0)
