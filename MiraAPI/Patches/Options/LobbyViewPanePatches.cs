@@ -186,7 +186,8 @@ public static class LobbyViewPanePatches
                 num -= 0.696f;
                 var roles = RoleManager.Instance.AllRoles.ToArray().Where(x =>
                     x is not ICustomRole && !x.IsRoleBlacklisted() && x.Role != RoleTypes.Crewmate &&
-                    x.Role != RoleTypes.Impostor &&
+                    x.Role != RoleTypes.Impostor && ((i == 0 && x.TeamType is RoleTeamTypes.Crewmate) ||
+                                                     (i == 1 && x.TeamType is RoleTeamTypes.Impostor)) &&
                     x.Role != RoleTypes.CrewmateGhost && x.Role != RoleTypes.ImpostorGhost).ToList();
                 for (int j = 0; j < roles.Count; j++)
                 {
