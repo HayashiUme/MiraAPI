@@ -71,15 +71,22 @@ public static class LogicRoleSelectionNormalPatch
         }
 
         __instance.AssignRolesFromList(players, teamMax, list, ref num);
-        if (defaultRole != null)
+        var defaultRole2 = team is RoleTeamTypes.Crewmate ? RoleTypes.Crewmate : RoleTypes.Impostor;
+        try
         {
-            while (list.Count < players.Count && list.Count + num < teamMax)
-            {
-                list.Add(defaultRole.Value);
-            }
-
-            __instance.AssignRolesFromList(players, teamMax, list, ref num);
+            defaultRole2 = defaultRole.Value;
         }
+        catch
+        {
+            // Ignored
+        }
+
+        while (list.Count < players.Count && list.Count + num < teamMax)
+        {
+            list.Add(defaultRole2);
+        }
+
+        __instance.AssignRolesFromList(players, teamMax, list, ref num);
 
         return false;
     }
