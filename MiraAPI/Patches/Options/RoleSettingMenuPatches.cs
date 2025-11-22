@@ -160,7 +160,7 @@ public static class RoleSettingMenuPatches
 
         foreach (var grouping in sortedRoleGroups)
         {
-            if (!grouping.Any() || grouping.All(x=>x.Configuration.HideSettings))
+            if (!grouping.Any() || grouping.All(x=> x.Configuration.HideSettings || !x.VisibleInSettings()))
             {
                 continue;
             }

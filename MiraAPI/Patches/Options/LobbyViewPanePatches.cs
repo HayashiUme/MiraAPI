@@ -382,7 +382,7 @@ public static class LobbyViewPanePatches
 
         foreach (var grouping in sortedRoleGroups)
         {
-            if (!grouping.Any() || grouping.All(x => x.Configuration.HideSettings))
+            if (!grouping.Any() || grouping.All(x => x.Configuration.HideSettings || !x.VisibleInSettings()))
             {
                 continue;
             }
@@ -413,7 +413,7 @@ public static class LobbyViewPanePatches
 
             foreach (var customRole in grouping)
             {
-                if (customRole.Configuration.HideSettings)
+                if (customRole.Configuration.HideSettings || !customRole.VisibleInSettings())
                 {
                     continue;
                 }
