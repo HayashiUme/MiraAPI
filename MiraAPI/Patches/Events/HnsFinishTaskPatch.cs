@@ -15,7 +15,7 @@ public static class HnsFinishTaskPatch
         NormalPlayerTask normalPlayerTask = task as NormalPlayerTask;
         if (normalPlayerTask != null)
         {
-            var completeTaskEvent = new CompleteHnsTaskEvent(task.Owner, task);
+            var completeTaskEvent = new CompleteHnsTaskEvent(__instance, task.Owner, task);
             MiraEventManager.InvokeEvent(completeTaskEvent);
             if (completeTaskEvent.IsCancelled)
             {
