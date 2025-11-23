@@ -1,9 +1,9 @@
 ﻿namespace MiraAPI.Events.Vanilla.Player;
 
 /// <summary>
-/// The event that is invoked when a player completes a task within Hide and Seek. Task cannot be cancelled, but timer changes can.
+/// The event that is invoked when a player completes a task within Hide and Seek. Non-cancelable.
 /// </summary>
-public class CompleteHnsTaskEvent : MiraCancelableEvent
+public class CompleteHnsTaskEvent : MiraEvent
 {
     /// <summary>
     /// Gets the instance of the <see cref="PlayerControl"/>.
