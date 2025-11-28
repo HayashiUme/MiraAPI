@@ -96,7 +96,7 @@ public abstract class CustomActionButton
     /// <summary>
     /// Gets or sets a value indicating whether limited uses are determined via zero or a negative number of uses.
     /// </summary>
-    public bool ZeroIsInfinite { get; set; } = true;
+    public virtual bool ZeroIsInfinite { get; set; } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether the effect is currently active, if there is one.
