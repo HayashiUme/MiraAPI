@@ -22,7 +22,17 @@ public class MiraNumberOptionComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
     public float DefaultIncrement { get; set; }
 
     /// <summary>
-    /// Gets or sets the value of whether or not holding shift will split the increment in half.
+    /// Gets or sets a value indicating whether holding shift will split the increment in half.
     /// </summary>
     public bool ShiftIncrementToggle { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating what Zero displays.
+    /// </summary>
+    public string ZeroValue { get; set; } = "#";
+
+    /// <summary>
+    /// Gets or sets a value indicating what Negative One displays.
+    /// </summary>
+    public string NegativeValue { get; set; } = "#";
 }

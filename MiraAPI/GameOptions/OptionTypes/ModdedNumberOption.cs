@@ -38,7 +38,7 @@ public class ModdedNumberOption : ModdedOption<float>
     public string ZeroWordValue { get; }
 
     /// <summary>
-    /// Gets a value indicating what negative one appears as.
+    /// Gets a value indicating what a negative one appears as.
     /// </summary>
     public string NegativeWordValue { get; }
 
@@ -177,6 +177,8 @@ public class ModdedNumberOption : ModdedOption<float>
         optionComponent.NumberOption = this;
         optionComponent.DefaultIncrement = Increment;
         optionComponent.ShiftIncrementToggle = ShiftIncrement;
+        optionComponent.NegativeValue = NegativeWordValue;
+        optionComponent.ZeroValue = ZeroWordValue;
 
         numberOption.SetUpFromData(Data, 20);
         numberOption.OnValueChanged = (Il2CppSystem.Action<OptionBehaviour>)ValueChanged;
