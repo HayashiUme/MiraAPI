@@ -91,7 +91,12 @@ public abstract class CustomActionButton
     /// <summary>
     /// Gets a value indicating whether the button has limited uses.
     /// </summary>
-    public bool LimitedUses => MaxUses > 0;
+    public bool LimitedUses => ZeroIsInfinite ? MaxUses > 0 : MaxUses >= 0;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether limited uses are determined via zero or a negative number of uses.
+    /// </summary>
+    public bool ZeroIsInfinite { get; set; } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether the effect is currently active, if there is one.
