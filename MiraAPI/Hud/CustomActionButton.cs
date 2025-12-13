@@ -211,7 +211,39 @@ public abstract class CustomActionButton
             {
                 if (Enabled(PlayerControl.LocalPlayer.Data.Role))
                 {
-                    ClickHandler();
+                    // Invoke the generic button click event.
+                    var genericEvent = new MiraButtonClickEvent(this);
+                    MiraEventManager.InvokeEvent(genericEvent);
+                    if (genericEvent.IsCancelled)
+                    {
+                        MiraEventManager.InvokeEvent(new MiraButtonCancelledEvent(this));
+                    }
+
+                    // Invoke the button click event for specific button.
+                    var eventType = CustomButtonManager.ButtonEventTypes[GetType()];
+                    var @event = (MiraCancelableEvent)Activator.CreateInstance(eventType, this, genericEvent)!;
+                    var specificInvoked = MiraEventManager.InvokeEvent(@event, eventType);
+                    if (@event.IsCancelled)
+                    {
+                        var cancelEventType = CustomButtonManager.ButtonCancelledEventTypes[GetType()];
+                        var cancelEvent = (MiraEvent)Activator.CreateInstance(cancelEventType, this)!;
+                        MiraEventManager.InvokeEvent(cancelEvent, cancelEventType);
+                    }
+
+                    if (specificInvoked)
+                    {
+                        if (!@event.IsCancelled)
+                        {
+                            ClickHandler();
+                        }
+                    }
+                    else
+                    {
+                        if (!genericEvent.IsCancelled)
+                        {
+                            ClickHandler();
+                        }
+                    }
                 }
             });
 
