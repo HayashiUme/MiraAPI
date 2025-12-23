@@ -6,7 +6,7 @@ using MiraAPI.Utilities.Assets;
 namespace MiraAPI;
 
 /// <summary>
-/// Mira API Config File Handler
+/// Mira API Config File Handler.
 /// </summary>
 public class MiraApiSettings(ConfigFile config) : LocalSettingsTab(config)
 {
@@ -39,4 +39,16 @@ public class MiraApiSettings(ConfigFile config) : LocalSettingsTab(config)
     /// </summary>
     [LocalToggleSetting]
     public ConfigEntry<bool> PrettyTaskAdder { get; private set; } = config.Bind("Freeplay", "Pretty Task Laptop", true);
+
+    /// <summary>
+    /// Gets whether to show the red flash from sabotages.
+    /// </summary>
+    [LocalToggleSetting]
+    public ConfigEntry<bool> EnableSabotageFlashes { get; private set; } = config.Bind("Accessibility", "Enable Sabotage Flashes", true);
+
+    /// <summary>
+    /// Gets whether to enable the sabotage sound effects or not.
+    /// </summary>
+    [LocalToggleSetting]
+    public ConfigEntry<bool> EnableSabotageBlares { get; private set; } = config.Bind("Accessibility", "Enable Sabotage Blare", true);
 }
