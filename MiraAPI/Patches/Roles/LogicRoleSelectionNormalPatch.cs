@@ -36,7 +36,7 @@ public static class LogicRoleSelectionNormalPatch
         foreach (RoleManager.RoleAssignmentData roleAssignmentData in guaranteedRoles.Select((x) =>
                      new RoleManager.RoleAssignmentData(x, roleOptions.GetNumPerGame(x.Role), 100)))
         {
-            for (;;)
+            while (true)
             {
                 RoleManager.RoleAssignmentData roleAssignmentData2 = roleAssignmentData;
                 int count = roleAssignmentData2.Count;

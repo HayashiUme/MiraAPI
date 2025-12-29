@@ -9,7 +9,7 @@ namespace MiraAPI.Keybinds;
 public class MiraKeybind : BaseKeybind
 {
     /// <summary>
-    /// Gets name of the keybind
+    /// Gets name of the keybind.
     /// </summary>
     public string Name { get; }
 
