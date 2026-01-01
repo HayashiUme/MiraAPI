@@ -228,6 +228,8 @@ public static class HudManagerPatches
             var comp = buttonObj.GetComponent<ActionButton>();
             KeybindManager.VanillaKeybinds[comp.GetType()].Button = comp;
         }
+        MiraApiSettings.OldButtonScaleFactor =
+            LocalSettingsTabSingleton<MiraApiSettings>.Instance.ButtonUIFactorSlider.Value;
         Coroutines.Start(CoResizeUI());
     }
 
