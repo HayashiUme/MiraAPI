@@ -1,4 +1,6 @@
-﻿namespace MiraAPI.Events.Vanilla.Gameplay;
+﻿using MiraAPI.Networking;
+
+namespace MiraAPI.Events.Vanilla.Gameplay;
 
 /// <summary>
 /// Event that is invoked before a player is murdered. This event is cancelable.
@@ -16,9 +18,9 @@ public sealed class BeforeMurderEvent : MiraCancelableEvent
     public PlayerControl Target { get; }
 
     /// <summary>
-    /// Gets whether the murder was meant to be done in a meeting.
+    /// Gets whether the murder was meant to be done in a meeting via an enum.
     /// </summary>
-    public bool? InMeeting { get; }
+    public MeetingCheck InMeeting { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BeforeMurderEvent"/> class.
@@ -26,7 +28,7 @@ public sealed class BeforeMurderEvent : MiraCancelableEvent
     /// <param name="source">The player that is killing the target.</param>
     /// <param name="target">The player that is being killed.</param>
     /// <param name="inMeeting">Whether the murder is intended to be triggered in a meeting.</param>
-    public BeforeMurderEvent(PlayerControl source, PlayerControl target, bool inMeeting)
+    public BeforeMurderEvent(PlayerControl source, PlayerControl target, MeetingCheck inMeeting)
     {
         Source = source;
         Target = target;
@@ -42,6 +44,6 @@ public sealed class BeforeMurderEvent : MiraCancelableEvent
     {
         Source = source;
         Target = target;
-        InMeeting = null;
+        InMeeting = MeetingCheck.Ignore;
     }
 }
