@@ -127,7 +127,7 @@ public static class CustomMurderRpc
     /// <param name="teleportMurderer">Should the killer be snapped to the dead player.</param>
     /// <param name="showKillAnim">Should the kill animation be shown.</param>
     /// <param name="playKillSound">Should the kill sound be played.</param>
-    [MethodRpc((uint)MiraRpc.ConfirmCustomMurder, LocalHandling = RpcLocalHandling.Before)]
+    [MethodRpc((uint)MiraRpc.ConfirmCustomMurder, LocalHandling = RpcLocalHandling.After)]
     public static void RpcConfirmCustomMurder(
         this PlayerControl host,
         PlayerControl source,
