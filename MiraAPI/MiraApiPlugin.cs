@@ -15,7 +15,7 @@ namespace MiraAPI;
 /// <summary>
 /// The main plugin class for Mira API.
 /// </summary>
-[BepInAutoPlugin("dev.allofus.miraapi", "MiraAPI")]
+[BepInAutoPlugin("mira.api", "MiraAPI")]
 [BepInProcess("Among Us.exe")]
 [BepInDependency(ReactorPlugin.Id)]
 [BepInDependency(ModCompatibility.SubmergedId, BepInDependency.DependencyFlags.SoftDependency)]
