@@ -3,8 +3,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using MiraAPI.Achievements;
-using MiraAPI.Example.Achievements;
+
 using MiraAPI.PluginLoading;
 using Reactor;
 using Reactor.Networking;
@@ -24,8 +23,6 @@ public partial class ExamplePlugin : BasePlugin, IMiraPlugin
     public ConfigFile GetConfigFile() => Config;
     public override void Load()
     {
-        MiraAPI.Achievements.AchievementManager.Initialize(Id);
-        ExampleAchievements.Register();
         ExampleEventHandlers.Initialize();
         Harmony.PatchAll();
     }
