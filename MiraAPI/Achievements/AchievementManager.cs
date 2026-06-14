@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using BepInEx;
 using MiraAPI.Events;
 using Reactor.Utilities;
 using UnityEngine;
@@ -17,7 +16,8 @@ namespace MiraAPI.Achievements;
 /// </summary>
 public static class AchievementManager
 {
-    private const string FileExtension = "_Achievement.dat";
+    private const string AchievementDir = "mira_achievement";
+    private const string AchievementFile = "Achievement.dat";
 
     private static readonly Dictionary<string, IAchievement> AllAchievements = [];
     private static readonly Dictionary<byte, AchievementProgressData> PlayerProgress = [];
@@ -33,12 +33,19 @@ public static class AchievementManager
 
     /// <summary>
     /// Initializes the achievement system for a specific mod. Creates/loads the encrypted data file.
+    /// File is stored at: Application.persistentDataPath/mira_achievement/{ModGuid}/Achievement.dat
     /// </summary>
-    /// <param name="modGuid">The mod's unique GUID, used for naming the save file.</param>
+    /// <param name="modGuid">The mod's unique GUID, used for the subfolder name.</param>
     public static void Initialize(string modGuid)
     {
         _currentModGuid = modGuid;
-        _saveFilePath = Path.Combine(Paths.ConfigPath, $"{SanitizeFileName(modGuid)}{FileExtension}");
+        var modDir = Path.Combine(Application.persistentDataPath, AchievementDir, SanitizeFileName(modGuid));
+        if (!Directory.Exists(modDir))
+        {
+            Directory.CreateDirectory(modDir);
+        }
+
+        _saveFilePath = Path.Combine(modDir, AchievementFile);
         LoadProgressFromFile();
     }
 
