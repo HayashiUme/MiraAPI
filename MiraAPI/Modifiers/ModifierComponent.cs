@@ -8,6 +8,7 @@ using MiraAPI.LocalSettings;
 using MiraAPI.Modifiers.ModifierDisplay;
 using MiraAPI.Modifiers.Types;
 using MiraAPI.Patches.Roles;
+using MiraAPI.Translation;
 using Reactor.Utilities;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
@@ -77,7 +78,7 @@ public class ModifierComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             }
             catch (Exception e)
             {
-                Error($"Error while deactivating modifier {modifier.ModifierName}: {e.ToString()}");
+                Error($"Error while deactivating modifier {modifier.ModifierName.Translate()}: {e.ToString()}");
             }
 
             Modifiers.Remove(modifier);
@@ -95,7 +96,7 @@ public class ModifierComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             }
             catch (Exception e)
             {
-                Error($"Error while activating modifier {modifier.ModifierName}: {e.ToString()}");
+                Error($"Error while activating modifier {modifier.ModifierName.Translate()}: {e.ToString()}");
             }
 
             if (modifier is TimedModifier { AutoStart: true } timer)
@@ -122,7 +123,7 @@ public class ModifierComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             }
             catch (Exception e)
             {
-                Error($"Error while (fixed) updating modifier {modifier.ModifierName}: {e.ToString()}");
+                Error($"Error while (fixed) updating modifier {modifier.ModifierName.Translate()}: {e.ToString()}");
             }
         }
 
@@ -153,7 +154,7 @@ public class ModifierComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             }
             catch (Exception e)
             {
-                Error($"Error while updating modifier {modifier.ModifierName}: {e.ToString()}");
+                Error($"Error while updating modifier {modifier.ModifierName.Translate()}: {e.ToString()}");
             }
         }
     }
@@ -352,7 +353,7 @@ public class ModifierComponent(IntPtr cppPtr) : MonoBehaviour(cppPtr)
     {
         if (!ActiveModifiers.Contains(modifier))
         {
-            Error($"Cannot remove modifier {modifier.ModifierName} because it is not active on this player.");
+            Error($"Cannot remove modifier {modifier.ModifierName.Translate()} because it is not active on this player.");
             return;
         }
 

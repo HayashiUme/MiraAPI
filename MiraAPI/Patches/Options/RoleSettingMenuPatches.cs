@@ -7,6 +7,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MiraAPI.GameOptions;
 using MiraAPI.Networking;
 using MiraAPI.Roles;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Reactor.Localization.Utilities;
@@ -176,11 +177,12 @@ public static class RoleSettingMenuPatches
 
             RoleGroupHidden.TryAdd(group, false);
 
-            var name = group.Name switch
+            var translatedName = group.Name.Translate();
+            var name = translatedName switch
             {
                 "Crewmate" => StringNames.CrewmateRolesHeader,
                 "Impostor" => StringNames.ImpostorRolesHeader,
-                _ => CustomStringName.CreateAndRegister(group.Name),
+                _ => CustomStringName.CreateAndRegister(translatedName),
             };
 
             var categoryHeaderMasked = Object.Instantiate(
@@ -245,8 +247,8 @@ public static class RoleSettingMenuPatches
             quotaInst.gameObject.SetActive(!RoleGroupHidden[group]);
 
             var label = RoleGroupHidden[group]
-                ? "(Click to open)"
-                : "(Click to close)";
+                ? $"({"gamesetting.global.clicktoopen".Translate()})"
+                : $"({"gamesetting.global.clicktoclose".Translate()})";
             var newText = Object.Instantiate(categoryHeaderMasked.Title, categoryHeaderMasked.transform);
             newText.text = $"<size=70%>{label}</size>";
             newText.transform.localPosition = new Vector3(2.6249f, -0.165f, 0f);
@@ -479,7 +481,7 @@ public static class RoleSettingMenuPatches
 
         RolePositions[GameSettingMenuPatches.SelectedModIdx] = __instance.scrollBar.Inner.localPosition;
 
-        __instance.roleDescriptionText.text = customRole.RoleLongDescription;
+        __instance.roleDescriptionText.text = customRole.RoleLongDescription.Translate();
         __instance.roleTitleText.text = role.GetRoleName();
 
         var imgBg = __instance.AdvancedRolesSettings.transform.FindChild("Imagebackground");
@@ -518,7 +520,7 @@ public static class RoleSettingMenuPatches
             comp.Destroy();
         }
 
-        categoryHeaderMasked.Title.text = "RETURN TO ROLE SETTINGS";
+        categoryHeaderMasked.Title.text = "miraApi.returnToRoleSettings".Translate();
 
         if (!categoryHeaderMasked.gameObject.TryGetComponent<PassiveButton>(out _))
         {

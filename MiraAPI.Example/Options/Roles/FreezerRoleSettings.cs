@@ -7,11 +7,11 @@ namespace MiraAPI.Example.Options.Roles;
 
 public class FreezerRoleSettings : AbstractOptionGroup<FreezerRole>
 {
-    public override string GroupName => "Custom Role";
+    public override string GroupName => "options.freezerRoleSettings.name";
 
-    [ModdedNumberOption("Freeze Duration", 1, 15, 1, MiraNumberSuffixes.Seconds)]
+    [ModdedNumberOption("options.freezerRoleSettings.freezeDuration", 1, 15, 1, MiraNumberSuffixes.Seconds)]
     public float FreezeDuration { get; set; } = 5;
 
-    [ModdedNumberOption("Freeze Uses", 1, 5)]
+    [ModdedNumberOption("options.freezerRoleSettings.freezeUses", 1, 5)]
     public float FreezeUses { get; set; } = 1;
 }
