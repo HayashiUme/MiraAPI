@@ -8,19 +8,10 @@ using UnityEngine;
 
 namespace MiraAPI.Translation;
 
-/// <summary>
-/// Manages translations for all Mira plugins.
-/// Copies embedded XML resources to disk on first run, then loads from disk.
-/// Supports user customization by editing files in mira_languages directory.
-/// </summary>
 public static class TranslationManager
 {
     private const string LangDirectory = "mira_languages";
 
-    /// <summary>
-    /// Dictionary: modGuid → lang → (key → translation).
-    /// Loaded from disk XML files.
-    /// </summary>
     private static readonly Dictionary<string, Dictionary<MiraLanguage, Dictionary<string, string>>> Translations = [];
 
     private static MiraLanguage _currentLanguage = MiraLanguage.English;
@@ -60,7 +51,6 @@ public static class TranslationManager
     {
         var currentLang = CurrentLanguage;
 
-        // Step 1: Direct lookup in current language
         foreach (var (_, modTranslations) in Translations)
         {
             if (modTranslations.TryGetValue(currentLang, out var langDict) &&
@@ -70,7 +60,6 @@ public static class TranslationManager
             }
         }
 
-        // Step 2: Direct lookup in English
         foreach (var (_, modTranslations) in Translations)
         {
             if (modTranslations.TryGetValue(MiraLanguage.English, out var engDict) &&
@@ -80,7 +69,6 @@ public static class TranslationManager
             }
         }
 
-        // Step 3: Reverse lookup — key matches an English value, use its structured key
         string? bestStructuredKey = null;
         foreach (var (_, modTranslations) in Translations)
         {
@@ -120,7 +108,6 @@ public static class TranslationManager
             }
         }
 
-        // Step 4: Nothing found — return the key itself
         return key;
     }
 
@@ -200,7 +187,6 @@ public static class TranslationManager
 
             if (string.IsNullOrEmpty(name)) continue;
 
-            // Decode XML markup: <nl> → \n, <and> → &
             value = value.Replace("<nl>", "\n").Replace("<and>", "&");
 
             dict[name] = value;
