@@ -46,7 +46,7 @@ public static class LobbyViewPanePatches
         var pos = ModifiersTabButton.transform.localPosition;
         pos.x = 2.1f;
         ModifiersTabButton.transform.localPosition = pos;
-        ModifiersTabButton.buttonText.text = "Modifiers";
+        ModifiersTabButton.buttonText.text = "gamesetting.modifiers".Translate();
         ModifiersTabButton.OnClick = new Button.ButtonClickedEvent();
         ModifiersTabButton.OnClick.AddListener(
             (UnityAction)(() =>

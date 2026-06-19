@@ -1,16 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using System.Reflection;
+using System.Xml.Linq;
 using Reactor.Utilities;
 using UnityEngine;
 
 namespace MiraAPI.Translation;
 
+/// <summary>
+/// Manages translations for all Mira plugins.
+/// Copies embedded XML resources to disk on first run, then loads from disk.
+/// Supports user customization by editing files in mira_languages directory.
+/// </summary>
 public static class TranslationManager
 {
-    private const string CacheDirectory = "mira_languages";
+    private const string LangDirectory = "mira_languages";
 
+    /// <summary>
+    /// Dictionary: modGuid → lang → (key → translation).
+    /// Loaded from disk XML files.
+    /// </summary>
     private static readonly Dictionary<string, Dictionary<MiraLanguage, Dictionary<string, string>>> Translations = [];
 
     private static MiraLanguage _currentLanguage = MiraLanguage.English;
@@ -25,64 +35,32 @@ public static class TranslationManager
     }
 
     /// <summary>
-    /// Registers a translation file from embedded resources.
+    /// Registers translations for a mod. Copies embedded XML to mira_languages/{modGuid}/ on first run,
+    /// then loads all XML files from that directory into memory.
+    /// Call once per mod during plugin Load().
     /// </summary>
-    /// <param name="modGuid">The mod guid.</param>
-    /// <param name="resourcePath">The embedded resource path.</param>
-    /// <param name="lang">The language this file provides translations for.</param>
-    public static void Register(string modGuid, string resourcePath, MiraLanguage lang)
+    /// <param name="modGuid">The mod GUID (e.g., "mira.example").</param>
+    public static void Register(string modGuid)
     {
-        var assembly = System.Reflection.Assembly.GetCallingAssembly();
+        var callingAssembly = Assembly.GetCallingAssembly();
+        var dir = GetModLangDir(modGuid);
 
-        using var stream = assembly.GetManifestResourceStream(resourcePath);
-        if (stream == null)
-        {
-            Error($"Translation resource not found: {resourcePath} in {assembly.GetName().Name}");
-            return;
-        }
+        // Copy embedded XML resources to disk (first-run only)
+        CopyEmbeddedToDisk(callingAssembly, modGuid, dir);
 
-        using var reader = new StreamReader(stream);
-        var json = reader.ReadToEnd();
-
-        Dictionary<string, string>? translationDict;
-        try
-        {
-            translationDict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-        }
-        catch (Exception e)
-        {
-            Error($"Failed to parse translation file {resourcePath}: {e.Message}");
-            return;
-        }
-
-        if (translationDict == null)
-        {
-            Error($"Translation file {resourcePath} is empty or invalid.");
-            return;
-        }
-
-        if (!Translations.ContainsKey(modGuid))
-        {
-            Translations[modGuid] = [];
-        }
-
-        Translations[modGuid][lang] = translationDict;
-
-        CacheToDisk(modGuid, lang, json);
-
-        Info($"Registered {lang} translation for mod {modGuid} ({translationDict.Count} keys)");
+        // Load all XML files from disk into memory
+        LoadFromDisk(modGuid, dir);
     }
 
     /// <summary>
     /// Translates a key into the current language.
     /// Searches all mods, with reverse lookup fallback.
     /// </summary>
-    /// <param name="key">The translation key (structured or display text).</param>
-    /// <returns>The translated string.</returns>
     public static string Translate(string key)
     {
         var currentLang = CurrentLanguage;
 
+        // Step 1: Direct lookup in current language
         foreach (var (_, modTranslations) in Translations)
         {
             if (modTranslations.TryGetValue(currentLang, out var langDict) &&
@@ -92,6 +70,7 @@ public static class TranslationManager
             }
         }
 
+        // Step 2: Direct lookup in English
         foreach (var (_, modTranslations) in Translations)
         {
             if (modTranslations.TryGetValue(MiraLanguage.English, out var engDict) &&
@@ -101,6 +80,7 @@ public static class TranslationManager
             }
         }
 
+        // Step 3: Reverse lookup — key matches an English value, use its structured key
         string? bestStructuredKey = null;
         foreach (var (_, modTranslations) in Translations)
         {
@@ -121,7 +101,6 @@ public static class TranslationManager
 
         if (bestStructuredKey != null)
         {
-            // Try current language first
             foreach (var (_, modTranslations) in Translations)
             {
                 if (modTranslations.TryGetValue(currentLang, out var langDict) &&
@@ -141,20 +120,92 @@ public static class TranslationManager
             }
         }
 
+        // Step 4: Nothing found — return the key itself
         return key;
     }
 
-    private static void CacheToDisk(string modGuid, MiraLanguage lang, string json)
+    private static string GetModLangDir(string modGuid)
     {
-        try
+        return Path.Combine(Application.persistentDataPath, LangDirectory, modGuid);
+    }
+
+    private static void CopyEmbeddedToDisk(Assembly assembly, string modGuid, string dir)
+    {
+        Directory.CreateDirectory(dir);
+
+        var resourcePrefix = $"{assembly.GetName().Name}.Resources.Translations.";
+
+        foreach (var resourceName in assembly.GetManifestResourceNames())
         {
-            var dir = Path.Combine(Application.persistentDataPath, CacheDirectory, modGuid);
-            Directory.CreateDirectory(dir);
-            File.WriteAllText(Path.Combine(dir, $"{lang}.json"), json);
+            if (!resourceName.StartsWith(resourcePrefix)) continue;
+
+            var fileName = resourceName.Substring(resourcePrefix.Length);
+            var diskPath = Path.Combine(dir, fileName);
+
+            try
+            {
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                if (stream == null) continue;
+
+                using var fs = File.Create(diskPath);
+                stream.CopyTo(fs);
+                Info($"Installed translation: {modGuid}/{fileName}");
+            }
+            catch (Exception e)
+            {
+                Warning($"Failed to copy {resourceName}: {e.Message}");
+            }
         }
-        catch (Exception e)
+    }
+
+    private static void LoadFromDisk(string modGuid, string dir)
+    {
+        if (!Directory.Exists(dir)) return;
+
+        if (!Translations.ContainsKey(modGuid))
         {
-            Warning($"Failed to cache translation to disk for {modGuid}/{lang}: {e.Message}");
+            Translations[modGuid] = [];
         }
+
+        foreach (var filePath in Directory.GetFiles(dir, "*.xml"))
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+
+            if (!Enum.TryParse<MiraLanguage>(fileName, out var lang)) continue;
+
+            try
+            {
+                var dict = ParseXmlFile(filePath);
+                Translations[modGuid][lang] = dict;
+                Info($"Loaded {lang} translation for mod {modGuid} ({dict.Count} keys)");
+            }
+            catch (Exception e)
+            {
+                Error($"Failed to load translation {filePath}: {e.Message}");
+            }
+        }
+    }
+
+    private static Dictionary<string, string> ParseXmlFile(string filePath)
+    {
+        var dict = new Dictionary<string, string>();
+        var doc = XDocument.Load(filePath);
+
+        if (doc.Root == null) return dict;
+
+        foreach (var element in doc.Root.Elements("string"))
+        {
+            var name = element.Attribute("name")?.Value;
+            var value = element.Value;
+
+            if (string.IsNullOrEmpty(name)) continue;
+
+            // Decode XML markup: <nl> → \n, <and> → &
+            value = value.Replace("<nl>", "\n").Replace("<and>", "&");
+
+            dict[name] = value;
+        }
+
+        return dict;
     }
 }

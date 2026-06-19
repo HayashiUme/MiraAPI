@@ -11,9 +11,9 @@ public class GeneralModifierOptions : AbstractOptionGroup
 
     public override bool ShowInModifiersMenu => true;
 
-    [ModdedToggleOption("Some Boolean Option")]
+    [ModdedToggleOption("options.generalModifier.someBooleanOption")]
     public bool SomeBooleanOption { get; set; } = true;
 
-    [ModdedNumberOption("Number Option", 0, 10, 1)]
+    [ModdedNumberOption("options.generalModifier.numberOption", 0, 10, 1)]
     public float NumberOption { get; set; } = 5;
 }

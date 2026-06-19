@@ -24,8 +24,7 @@ public partial class ExamplePlugin : BasePlugin, IMiraPlugin
     public ConfigFile GetConfigFile() => Config;
     public override void Load()
     {
-        TranslationManager.Register("mira.example", "MiraAPI.Example.Resources.Translations.English.json", MiraLanguage.English);
-        TranslationManager.Register("mira.example", "MiraAPI.Example.Resources.Translations.SChinese.json", MiraLanguage.SChinese);
+        TranslationManager.Register("mira.example");
 
         ExampleEventHandlers.Initialize();
         Harmony.PatchAll();

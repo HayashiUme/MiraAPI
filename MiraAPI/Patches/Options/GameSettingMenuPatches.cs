@@ -311,7 +311,7 @@ internal static class GameSettingMenuPatches
         _smallRoleBtnOgPos = _smallRolesButton.transform.localPosition;
 
         var roleText = _smallRolesButton.buttonText;
-        roleText.text = "Roles";
+        roleText.text = "gamesetting.roles".Translate();
         roleText.GetComponent<TextTranslatorTMP>().Destroy();
         roleText.alignment = TextAlignmentOptions.Center;
         roleText.transform.parent.localPosition = new Vector3(
@@ -346,7 +346,7 @@ internal static class GameSettingMenuPatches
                 __instance.ChangeTab(3, true);
             }));
 
-        _modifiersButton.buttonText.text = "Modifiers";
+        _modifiersButton.buttonText.text = "gamesetting.modifiers".Translate();
         pos.x = -2.27f;
         _modifiersButton.transform.localPosition = pos;
         _modifiersButton.name = "ModifiersButton";

@@ -253,8 +253,8 @@ public static class RoleSettingMenuPatches
             quotaInst.gameObject.SetActive(!RoleGroupHidden[group]);
 
             var label = RoleGroupHidden[group]
-                ? "(Click to open)"
-                : "(Click to close)";
+                ? $"({"gamesetting.global.clicktoopen".Translate()})"
+                : $"({"gamesetting.global.clicktoclose".Translate()})";
             var newText = Object.Instantiate(categoryHeaderMasked.Title, categoryHeaderMasked.transform);
             newText.text = $"<size=70%>{label}</size>";
             newText.transform.localPosition = new Vector3(2.6249f, -0.165f, 0f);

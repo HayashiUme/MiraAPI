@@ -75,8 +75,7 @@ public partial class MiraApiPlugin : BasePlugin
         PluginManager = new MiraPluginManager();
         PluginManager.Initialize();
 
-        TranslationManager.Register("mira.api", "MiraAPI.Resources.Translations.English.json", MiraLanguage.English);
-        TranslationManager.Register("mira.api", "MiraAPI.Resources.Translations.SChinese.json", MiraLanguage.SChinese);
+        TranslationManager.Register("mira.api");
 
         TranslationManager.CurrentLanguage = DetectGameLanguage();
     }
