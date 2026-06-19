@@ -2,15 +2,14 @@
 using MiraAPI.Example.GameOver;
 using MiraAPI.GameEnd;
 using MiraAPI.Roles;
-using MiraAPI.Translation;
 using UnityEngine;
 
 namespace MiraAPI.Example.Roles;
 
 public class NeutralKillerRole : ImpostorRole, ICustomRole
 {
-    public string RoleName => "outcastKiller.name".Translate();
-    public string RoleDescription => "outcastKiller.description".Translate();
+    public string RoleName => "outcastKiller.name";
+    public string RoleDescription => "outcastKiller.description";
     public string RoleLongDescription => RoleDescription;
     public Color RoleColor => Color.magenta;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
@@ -22,13 +21,13 @@ public class NeutralKillerRole : ImpostorRole, ICustomRole
         CanUseVent = true,
     };
 
-    public RoleOptionsGroup RoleOptionsGroup { get; } = new("outcast.name".Translate(), Color.gray);
+    public RoleOptionsGroup RoleOptionsGroup { get; } = new("outcast.name", Color.gray);
 
     [HideFromIl2Cpp]
     public TeamIntroConfiguration? IntroConfiguration { get; } = new(
         Color.gray,
-        "outcast.roleTitle".Translate(),
-        "outcast.teamIntroDescription".Translate());
+        "outcast.roleTitle",
+        "outcast.teamIntroDescription");
 
     public override void SpawnTaskHeader(PlayerControl playerControl)
     {

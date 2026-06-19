@@ -5,7 +5,6 @@ using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
-using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace MiraAPI.Example.Buttons.Freezer;
 
 public class FreezeButton : CustomActionButton<PlayerControl>
 {
-    public override string Name => "button.freeze.name".Translate();
+    public override string Name => "button.freeze.name";
 
     public override float Cooldown => OptionGroupSingleton<FreezerRoleSettings>.Instance.FreezeDuration;
     public override bool PauseTimerInVent => true;

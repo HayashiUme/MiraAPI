@@ -1,14 +1,13 @@
 ﻿using Il2CppSystem;
 using MiraAPI.Example.Roles;
 using MiraAPI.Modifiers.Types;
-using MiraAPI.Translation;
 using UnityEngine;
 
 namespace MiraAPI.Example.Modifiers.Freezer;
 
 public class FreezeModifier : TimedModifier
 {
-    public override string ModifierName => "modifier.freezed.name".Translate();
+    public override string ModifierName => "modifier.freezed.name";
     public override bool HideOnUi => false;
     public override float Duration => 15f;
     public override bool AutoStart => true;

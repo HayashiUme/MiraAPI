@@ -487,7 +487,7 @@ public static class RoleSettingMenuPatches
 
         RolePositions[GameSettingMenuPatches.SelectedModIdx] = __instance.scrollBar.Inner.localPosition;
 
-        __instance.roleDescriptionText.text = customRole.RoleLongDescription;
+        __instance.roleDescriptionText.text = customRole.RoleLongDescription.Translate();
         __instance.roleTitleText.text = role.GetRoleName();
 
         var imgBg = __instance.AdvancedRolesSettings.transform.FindChild("Imagebackground");

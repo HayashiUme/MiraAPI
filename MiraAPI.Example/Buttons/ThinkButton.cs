@@ -7,7 +7,7 @@ namespace MiraAPI.Example.Buttons;
 
 public class ThinkButton : CustomActionButton
 {
-    public override string Name => "button.think.name".Translate();
+    public override string Name => "button.think.name";
     public override float Cooldown => 15f;
     public override float EffectDuration => 10f;
     public override int MaxUses => 1;

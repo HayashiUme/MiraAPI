@@ -4,7 +4,6 @@ using MiraAPI.Example.Roles;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Keybinds;
-using MiraAPI.Translation;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace MiraAPI.Example.Buttons.Teleporter;
 
 public class TeleportButton : CustomActionButton
 {
-    public override string Name => "button.teleport.name".Translate();
+    public override string Name => "button.teleport.name";
 
     public override float Cooldown => OptionGroupSingleton<TeleporterOptions>.Instance.TeleportCooldown.Value;
 

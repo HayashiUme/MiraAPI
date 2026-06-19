@@ -2,14 +2,13 @@
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
 using MiraAPI.GameOptions.OptionTypes;
-using MiraAPI.Translation;
 using MiraAPI.Utilities;
 
 namespace MiraAPI.Example.Options.Roles;
 
 public class TeleporterOptions : AbstractOptionGroup<TeleporterRole>
 {
-    public override string GroupName => "options.teleporterOptions.name".Translate();
+    public override string GroupName => "options.teleporterOptions.name";
 
     public ModdedNumberOption TeleportCooldown { get; set; } = new("Teleport Cooldown", 10, 5, 60, 2.5f, MiraNumberSuffixes.Seconds);
 

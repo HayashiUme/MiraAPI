@@ -1,13 +1,12 @@
 ﻿using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.OptionTypes;
-using MiraAPI.Translation;
 using Reactor.Utilities;
 
 namespace MiraAPI.Example.Options;
 
 public class ExampleOptions2 : AbstractOptionGroup
 {
-    public override string GroupName => "options.exampleOptions2.name".Translate();
+    public override string GroupName => "options.exampleOptions2.name";
 
     public override uint GroupPriority => 0; // This group will be displayed first. The default value is uint.MaxValue.
 

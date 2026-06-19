@@ -1,13 +1,12 @@
 ﻿using MiraAPI.Roles;
-using MiraAPI.Translation;
 using UnityEngine;
 
 namespace MiraAPI.Example.Roles;
 
 public class TeleporterRole : CrewmateRole, ICustomRole
 {
-    public string RoleName => "teleporter.name".Translate();
-    public string RoleLongDescription => "teleporter.description".Translate();
+    public string RoleName => "teleporter.name";
+    public string RoleLongDescription => "teleporter.description";
     public string RoleDescription => RoleLongDescription;
     public Color RoleColor => new Color32(221, 176, 152, 255);
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;

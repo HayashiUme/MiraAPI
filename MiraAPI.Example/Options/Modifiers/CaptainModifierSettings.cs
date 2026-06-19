@@ -1,13 +1,12 @@
 ﻿using MiraAPI.Example.Modifiers;
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
-using MiraAPI.Translation;
 
 namespace MiraAPI.Example.Options.Modifiers;
 
 public class CaptainModifierSettings : AbstractOptionGroup<CaptainModifier>
 {
-    public override string GroupName => "options.captainSettings.name".Translate();
+    public override string GroupName => "options.captainSettings.name";
 
     [ModdedNumberOption("Amount", 0, 5)]
     public float Amount { get; set; } = 1;

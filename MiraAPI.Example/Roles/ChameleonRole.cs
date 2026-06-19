@@ -1,7 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
-using MiraAPI.Translation;
 using Reactor.Utilities;
 using TMPro;
 using UnityEngine;
@@ -10,8 +9,8 @@ namespace MiraAPI.Example.Roles;
 
 public class ChameloenRole : CrewmateRole, ICustomRole
 {
-    public string RoleName => "chamelon.name".Translate();
-    public string RoleLongDescription => "chamelon.description".Translate();
+    public string RoleName => "chamelon.name";
+    public string RoleLongDescription => "chamelon.description";
     public string RoleDescription => RoleLongDescription;
     public Color RoleColor => Palette.AcceptedGreen;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;

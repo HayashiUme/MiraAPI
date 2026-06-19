@@ -1,15 +1,14 @@
 ﻿using MiraAPI.Modifiers.Types;
-using MiraAPI.Translation;
 
 namespace MiraAPI.Example.Modifiers;
 
 public class HighPriorityModifier : GameModifier
 {
-    public override string ModifierName => "modifier.highPriority.name".Translate();
+    public override string ModifierName => "modifier.highPriority.name";
 
     public override string GetDescription()
     {
-        return "modifier.highPriority.description".Translate();
+        return "modifier.highPriority.description";
     }
 
     public override int GetAssignmentChance()

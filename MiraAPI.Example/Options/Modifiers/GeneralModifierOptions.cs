@@ -1,12 +1,11 @@
 ﻿using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
-using MiraAPI.Translation;
 
 namespace MiraAPI.Example.Options.Modifiers;
 
 public class GeneralModifierOptions : AbstractOptionGroup
 {
-    public override string GroupName => "options.generalModifier.name".Translate();
+    public override string GroupName => "options.generalModifier.name";
 
     public override uint GroupPriority => 0;
 
