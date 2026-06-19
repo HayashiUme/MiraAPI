@@ -60,6 +60,8 @@ public static class TranslationManager
     {
         var currentLang = CurrentLanguage;
 
+        Info($"[DEBUG] Translate key=\"{key}\" lang={currentLang} mods={Translations.Count}");
+
         // Step 1: Direct lookup in current language
         foreach (var (_, modTranslations) in Translations)
         {

@@ -19,13 +19,15 @@ namespace MiraAPI.Example;
 [ReactorModFlags(ModFlags.RequireOnAllClients)]
 public partial class ExamplePlugin : BasePlugin, IMiraPlugin
 {
+    public ExamplePlugin()
+    {
+        TranslationManager.Register("mira.example");
+    }
     public Harmony Harmony { get; } = new(Id);
     public string OptionsTitleText => "Mira API\nExample Mod";
     public ConfigFile GetConfigFile() => Config;
     public override void Load()
     {
-        TranslationManager.Register("mira.example");
-
         ExampleEventHandlers.Initialize();
         Harmony.PatchAll();
     }
