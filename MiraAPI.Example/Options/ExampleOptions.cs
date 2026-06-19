@@ -1,5 +1,6 @@
 ﻿using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace MiraAPI.Example.Options;
 
 public class ExampleOptions : AbstractOptionGroup
 {
-    public override string GroupName => "Example Options 1";
+    public override string GroupName => "options.exampleOptions1.name".Translate();
     public override Color GroupColor => Color.green;
 
     [ModdedToggleOption("Toggle Opt 1")]

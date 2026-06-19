@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MiraAPI.Translation;
 using Reactor.Utilities;
 
 namespace MiraAPI.GameModes;
@@ -62,7 +63,7 @@ public static class CustomGameModeManager
 
         if (GameModes.Any(x => x.Key == gameMode.Id))
         {
-            Error($"ID for gamemode {gameMode.Name} already exists!");
+            Error($"ID for gamemode {gameMode.Name.Translate()} already exists!");
             return;
         }
 

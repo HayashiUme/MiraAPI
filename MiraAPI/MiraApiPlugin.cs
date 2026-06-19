@@ -4,6 +4,7 @@ using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using MiraAPI.PluginLoading;
+using MiraAPI.Translation;
 using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
@@ -45,6 +46,25 @@ public partial class MiraApiPlugin : BasePlugin
     private static MiraPluginManager? PluginManager { get; set; }
     internal Harmony Harmony { get; } = new(Id);
 
+    private static MiraLanguage DetectGameLanguage()
+    {
+        try
+        {
+            var langName = AmongUs.Data.DataManager.Settings.Language.CurrentLanguage.ToString();
+            if (Enum.TryParse<MiraLanguage>(langName, out var result))
+            {
+                Info($"Detected game language: {langName} -> {result}");
+                return result;
+            }
+            Warning($"Unknown game language: {langName}");
+            return MiraLanguage.English;
+        }
+        catch
+        {
+            return MiraLanguage.English;
+        }
+    }
+
     /// <inheritdoc />
     public override void Load()
     {
@@ -54,5 +74,10 @@ public partial class MiraApiPlugin : BasePlugin
 
         PluginManager = new MiraPluginManager();
         PluginManager.Initialize();
+
+        TranslationManager.Register("mira.api", "MiraAPI.Resources.Translations.English.json", MiraLanguage.English);
+        TranslationManager.Register("mira.api", "MiraAPI.Resources.Translations.SChinese.json", MiraLanguage.SChinese);
+
+        TranslationManager.CurrentLanguage = DetectGameLanguage();
     }
 }

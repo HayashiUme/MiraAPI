@@ -1,4 +1,5 @@
 ﻿using System;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using Reactor.Localization.Utilities;
 using Reactor.Utilities.Extensions;
@@ -52,7 +53,7 @@ public class LocalSettingsButton(string text, Action onClick)
             button.transform.localPosition = new Vector3(order == 1 ? -1.185f : 1.185f, 1.85f - offset, -7);
         }
 
-        tmp.text = Text;
+        tmp.text = Text.Translate();
         button.name = Text;
         button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
         rollover.OutColor = Tab!.TabAppearance.ButtonColor;

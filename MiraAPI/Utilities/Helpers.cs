@@ -6,6 +6,7 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MiraAPI.Roles;
+using MiraAPI.Translation;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using Rewired;
@@ -533,7 +534,7 @@ public static class Helpers
     {
         if (role is ICustomRole custom)
         {
-            return custom.RoleName;
+            return custom.RoleName.Translate();
         }
         return role.NiceName;
     }

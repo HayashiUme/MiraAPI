@@ -2,6 +2,7 @@
 using MiraAPI.Hud;
 using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
+using MiraAPI.Translation;
 using MiraAPI.Utilities.Assets;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace MiraAPI.Example.Buttons;
 
 public class MeetingButton : CustomActionButton
 {
-    public override string Name => "Call Meeting";
+    public override string Name => "button.callMeeting.name".Translate();
 
     public override float Cooldown => 15;
 

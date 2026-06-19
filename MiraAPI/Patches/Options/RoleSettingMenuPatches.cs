@@ -7,6 +7,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MiraAPI.GameOptions;
 using MiraAPI.Networking;
 using MiraAPI.Roles;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Reactor.Localization.Utilities;
@@ -182,11 +183,12 @@ public static class RoleSettingMenuPatches
 
             RoleGroupHidden.TryAdd(group, false);
 
-            var name = group.Name switch
+            var translatedName = group.Name.Translate();
+            var name = translatedName switch
             {
                 "Crewmate" => StringNames.CrewmateRolesHeader,
                 "Impostor" => StringNames.ImpostorRolesHeader,
-                _ => CustomStringName.CreateAndRegister(group.Name),
+                _ => CustomStringName.CreateAndRegister(translatedName),
             };
 
             var categoryHeaderMasked = Object.Instantiate(
@@ -524,7 +526,7 @@ public static class RoleSettingMenuPatches
             comp.Destroy();
         }
 
-        categoryHeaderMasked.Title.text = "RETURN TO ROLE SETTINGS";
+        categoryHeaderMasked.Title.text = "miraApi.returnToRoleSettings".Translate();
 
         if (!categoryHeaderMasked.gameObject.TryGetComponent<PassiveButton>(out _))
         {

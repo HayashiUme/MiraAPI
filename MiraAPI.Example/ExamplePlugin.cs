@@ -5,6 +5,7 @@ using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 
 using MiraAPI.PluginLoading;
+using MiraAPI.Translation;
 using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
@@ -23,6 +24,9 @@ public partial class ExamplePlugin : BasePlugin, IMiraPlugin
     public ConfigFile GetConfigFile() => Config;
     public override void Load()
     {
+        TranslationManager.Register("mira.example", "MiraAPI.Example.Resources.Translations.English.json", MiraLanguage.English);
+        TranslationManager.Register("mira.example", "MiraAPI.Example.Resources.Translations.SChinese.json", MiraLanguage.SChinese);
+
         ExampleEventHandlers.Initialize();
         Harmony.PatchAll();
     }

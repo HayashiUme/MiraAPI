@@ -6,6 +6,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.PluginLoading;
 using MiraAPI.Presets;
+using MiraAPI.Translation;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities.Extensions;
 using TMPro;
@@ -110,15 +111,15 @@ internal static class GameSettingMenuPatches
                     {
                         case 3:
                             _modifiersButton?.SelectButton(true);
-                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.ModifierMenuDescription : "Configure modifiers and their settings here!";
+                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.ModifierMenuDescription.Translate() : "Configure modifiers and their settings here!";
                             break;
                         case 4:
                             _customOneButton?.SelectButton(true);
-                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuOneDescription : "Apply game settings for this mod!";
+                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuOneDescription.Translate() : "Apply game settings for this mod!";
                             break;
                         case 5:
                             _customTwoButton?.SelectButton(true);
-                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuTwoDescription : "Apply game settings for this mod!";
+                            __instance.MenuDescriptionText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuTwoDescription.Translate() : "Apply game settings for this mod!";
                             break;
                     }
                 }
@@ -256,7 +257,7 @@ internal static class GameSettingMenuPatches
                 __instance.ChangeTab(4, true);
             }));
 
-        _customOneButton.buttonText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuNameOne : "Custom Category 1";
+        _customOneButton.buttonText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuNameOne.Translate() : "Custom Category 1";
         customPos.y -= 0.637f;
         _customOneButton.transform.localPosition = customPos;
         _customOneButton.name = "CustomOneButton";
@@ -278,7 +279,7 @@ internal static class GameSettingMenuPatches
                 __instance.ChangeTab(5, true);
             }));
 
-        _customTwoButton.buttonText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuNameTwo : "Custom Category 2";
+        _customTwoButton.buttonText.text = SelectedMod != null ? SelectedMod.MiraPlugin.CustomOptionMenuNameTwo.Translate() : "Custom Category 2";
         customPos.y -= 0.637f;
         _customTwoButton.transform.localPosition = customPos;
         _customTwoButton.name = "CustomTwoButton";
@@ -408,7 +409,7 @@ internal static class GameSettingMenuPatches
             _text.fontSizeMax = 2.3f;
             SelectedMod = MiraPluginManager.Instance.RegisteredPlugins[SelectedModIdx - 1];
 
-            var name = SelectedMod.MiraPlugin.OptionsTitleText;
+            var name = SelectedMod.MiraPlugin.OptionsTitleText.Translate();
             _text.text = $"<size=50%>(Page {SelectedModIdx}/{MiraPluginManager.Instance.RegisteredPlugins.Length})</size>\n" + name[..Math.Min(name.Length, 25)];
         }
 
@@ -421,8 +422,8 @@ internal static class GameSettingMenuPatches
 
         if (SelectedModIdx != 0)
         {
-            _customOneButton.buttonText.text = SelectedMod!.MiraPlugin.CustomOptionMenuNameOne;
-            _customTwoButton.buttonText.text = SelectedMod!.MiraPlugin.CustomOptionMenuNameTwo;
+            _customOneButton.buttonText.text = SelectedMod!.MiraPlugin.CustomOptionMenuNameOne.Translate();
+            _customTwoButton.buttonText.text = SelectedMod!.MiraPlugin.CustomOptionMenuNameTwo.Translate();
             var modHasRoles = SelectedMod!.InternalRoles.Count != 0;
             var modHasCustomOne = SelectedMod.InternalOptionGroups.Exists(
                 x => x.ParentMenu == MenuCategory.CustomOne);

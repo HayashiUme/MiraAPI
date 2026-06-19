@@ -7,6 +7,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.PluginLoading;
 using MiraAPI.Roles;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Reactor.Localization.Utilities;
@@ -300,7 +301,7 @@ public static class LobbyViewPanePatches
                 true);
 
             categoryHeaderMasked.SetHeader(StringNames.Name, 61);
-            categoryHeaderMasked.Title.text = group.GroupName;
+            categoryHeaderMasked.Title.text = group.GroupName.Translate();
             categoryHeaderMasked.transform.localScale = Vector3.one;
             categoryHeaderMasked.transform.localPosition = new Vector3(-9.77f, num, -2f);
             menu.settingsInfo.Add(categoryHeaderMasked.gameObject);
@@ -396,11 +397,12 @@ public static class LobbyViewPanePatches
 
             var group = grouping.Key;
 
-            var name = group.Name switch
+            var translatedName = group.Name.Translate();
+            var name = translatedName switch
             {
                 "Crewmate" => StringNames.CrewmateRolesHeader,
                 "Impostor" => StringNames.ImpostorRolesHeader,
-                _ => CustomStringName.CreateAndRegister(group.Name),
+                _ => CustomStringName.CreateAndRegister(translatedName),
             };
 
             var categoryHeaderRoleVariant = Object.Instantiate(instance.categoryHeaderRoleOrigin, instance.settingsContainer, true);

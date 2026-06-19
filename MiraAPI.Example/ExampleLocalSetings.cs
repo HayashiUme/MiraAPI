@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using MiraAPI.LocalSettings;
 using MiraAPI.LocalSettings.Attributes;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace MiraAPI.Example;
 
 public class ExampleLocalSettings(ConfigFile config) : LocalSettingsTab(config)
 {
-    public override string TabName => "Mira Example";
+    public override string TabName => "settings.miraExample.name".Translate();
     protected override bool ShouldCreateLabels => false;
 
     public override LocalSettingTabAppearance TabAppearance => new()
@@ -18,7 +19,7 @@ public class ExampleLocalSettings(ConfigFile config) : LocalSettingsTab(config)
     };
 
     [LocalSettingsButton]
-    public LocalSettingsButton ExampleButton { get; private set; } = new("Example Button", OnExampleButtonClick);
+    public LocalSettingsButton ExampleButton { get; private set; } = new("settings.miraExample.button.exampleButton".Translate(), OnExampleButtonClick);
 
     [LocalToggleSetting]
     public ConfigEntry<bool> ExampleToggle { get; private set; } = config.Bind("General", "Example Bool", true);

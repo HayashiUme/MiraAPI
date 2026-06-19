@@ -1,0 +1,21 @@
+{
+    "miraApi.name": "Mira API",
+    "miraApi.visualsUi": "Visuals/UI",
+    "miraApi.freeplay": "Freeplay",
+    "miraApi.accessibility": "Accessibility",
+    "miraApi.miraApiBrand": "MiraAPI",
+    "miraApi.showModifiersHudOnLeftSide": "Show Modifiers HUD on Left Side",
+    "miraApi.showKeybindsOnButtons": "Show Keybinds on Buttons",
+    "miraApi.buttonScaleFactor": "Button Scale Factor",
+    "miraApi.maxFps": "Max FPS",
+    "miraApi.prettyTaskLaptop": "Pretty Task Laptop",
+    "miraApi.enableSabotageFlashes": "Enable Sabotage Flashes",
+    "miraApi.enableSabotageBlare": "Enable Sabotage Blare",
+    "miraApi.returnToRoleSettings": "RETURN TO ROLE SETTINGS",
+    "miraApi.customCategory1": "Custom Category 1",
+    "miraApi.customCategory2": "Custom Category 2",
+    "miraApi.modifierMenuDescription": "Configure modifiers and their settings here!",
+    "miraApi.customOptionMenuDescription": "Apply game settings for this mod!",
+    "gamemode.default.name": "Default",
+    "gamemode.default.description": "Default Among Us GameMode"
+}

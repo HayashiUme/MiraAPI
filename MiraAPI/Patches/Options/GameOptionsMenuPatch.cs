@@ -6,6 +6,7 @@ using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Presets;
+using MiraAPI.Translation;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Reactor.Localization.Utilities;
@@ -272,7 +273,7 @@ internal static class GameOptionsMenuPatch
             Quaternion.identity,
             menu.settingsContainer);
 
-        categoryHeaderMasked.SetHeader(CustomStringName.CreateAndRegister(group.GroupName), 20);
+        categoryHeaderMasked.SetHeader(CustomStringName.CreateAndRegister(group.GroupName.Translate()), 20);
         categoryHeaderMasked.Background.color = group.GroupColor;
         categoryHeaderMasked.Divider.color = group.GroupColor;
         categoryHeaderMasked.Title.color = group.GroupColor.Equals(MiraApiPlugin.DefaultHeaderColor)
