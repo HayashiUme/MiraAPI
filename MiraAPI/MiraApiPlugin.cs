@@ -46,25 +46,6 @@ public partial class MiraApiPlugin : BasePlugin
     private static MiraPluginManager? PluginManager { get; set; }
     internal Harmony Harmony { get; } = new(Id);
 
-    private static MiraLanguage DetectGameLanguage()
-    {
-        try
-        {
-            var langName = AmongUs.Data.DataManager.Settings.Language.CurrentLanguage.ToString();
-            if (Enum.TryParse<MiraLanguage>(langName, out var result))
-            {
-                Info($"Detected game language: {langName} -> {result}");
-                return result;
-            }
-            Warning($"Unknown game language: {langName}");
-            return MiraLanguage.English;
-        }
-        catch
-        {
-            return MiraLanguage.English;
-        }
-    }
-
     /// <inheritdoc />
     public override void Load()
     {
@@ -76,7 +57,5 @@ public partial class MiraApiPlugin : BasePlugin
         PluginManager.Initialize();
 
         TranslationManager.Register("mira.api");
-
-        TranslationManager.CurrentLanguage = DetectGameLanguage();
     }
 }

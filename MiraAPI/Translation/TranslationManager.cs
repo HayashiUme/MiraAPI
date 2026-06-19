@@ -14,15 +14,23 @@ public static class TranslationManager
 
     private static readonly Dictionary<string, Dictionary<MiraLanguage, Dictionary<string, string>>> Translations = [];
 
-    private static MiraLanguage _currentLanguage = MiraLanguage.English;
-
     /// <summary>
-    /// Gets or sets the current language.
+    /// Gets the current language from Among Us settings.
     /// </summary>
     public static MiraLanguage CurrentLanguage
     {
-        get => _currentLanguage;
-        set => _currentLanguage = value;
+        get
+        {
+            try
+            {
+                var langName = AmongUs.Data.DataManager.Settings.Language.CurrentLanguage.ToString();
+                return Enum.TryParse<MiraLanguage>(langName, out var result) ? result : MiraLanguage.English;
+            }
+            catch
+            {
+                return MiraLanguage.English;
+            }
+        }
     }
 
     /// <summary>
